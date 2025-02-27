@@ -6,7 +6,6 @@ export default function RegistrationForm() {
     const [formData, setFormData] = useState({ email: "", password: "" });
     let [stage, setStage] = useState(0)
     let [sixDgt, setSixDgt] = useState('')
-    console.log(sixDgt)
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -14,7 +13,7 @@ export default function RegistrationForm() {
                 <FirstForm formData={formData} setFormData={setFormData} setStage={setStage} />
                 : stage == 1 ?
                     <div>
-                        <SecondForm sixDgt={sixDgt} setSixDgt={setSixDgt} stage={stage} setStage={setStage} />
+                        <SecondForm sixDgt={sixDgt} setSixDgt={setSixDgt} stage={stage} setStage={setStage} formData={formData}/>
                     </div>
                     : stage == 2 &&
                     <div>

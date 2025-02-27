@@ -42,9 +42,8 @@ const FirstForm: React.FC<FirstFormProps> = ({ formData, setFormData, setStage }
         setStage((prevStage) => prevStage + 1);
       })
       .catch((error) => {
-        console.log(error)
         Swal.fire({
-          title: error.response.data,
+          title: error.response.data.message,
           icon: "error"
         });
       })
@@ -57,7 +56,7 @@ const FirstForm: React.FC<FirstFormProps> = ({ formData, setFormData, setStage }
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white text-black p-8 rounded-2xl shadow-xl w-96"
+        className="bg-white text-black p-8 rounded-2xl shadow-xl md:w-96"
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-bold text-center mb-6 text-black">Register</h2>
