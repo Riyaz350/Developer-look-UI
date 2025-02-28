@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import useAxiosPublic from '~/hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
     email: string;
     password: string;
 };
+
 type SecondFormProps = {
     sixDgt: string;
     stage: number;
@@ -15,7 +17,8 @@ type SecondFormProps = {
     formData: FormData;
 };
 
-const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setStage, formData }) => {
+const SecondRegForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setStage, formData }) => {
+    const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
     const [expiredOTP, setExpiredOTP] = useState<boolean>(false);
     const [timer, setTimer] = useState<number | null>(null);
@@ -25,11 +28,11 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
         userOTP: sixDgt
     };
 
-     
+
     useEffect(() => {
         if (stage === 1) {
             setExpiredOTP(false);
-            setTimer(120);  
+            setTimer(120);
 
             const countdown = setInterval(() => {
                 setTimer((prev) => (prev !== null && prev > 0 ? prev - 1 : null));
@@ -39,7 +42,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
                 setExpiredOTP(true);
                 setTimer(null);
                 clearInterval(countdown);
-            }, 120000);  
+            }, 120000);
 
             return () => clearInterval(countdown);
         }
@@ -48,7 +51,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
     function resendOTP(e: React.FormEvent) {
         e.preventDefault();
         setExpiredOTP(false);
-        setTimer(120);  
+        setTimer(120);
 
         const countdown = setInterval(() => {
             setTimer((prev) => (prev !== null && prev > 0 ? prev - 1 : null));
@@ -58,7 +61,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
             setExpiredOTP(true);
             setTimer(null);
             clearInterval(countdown);
-        }, 120000); 
+        }, 120000);
 
         const mailData = {
             email: formData.email,
@@ -68,7 +71,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
             duration: 2
         };
 
-        axiosPublic.post('/user/signup', mailData)
+        axiosPublic.post('/user/otpAgain', mailData)
             .then(() => {
                 Swal.fire({
                     title: "A six-digit code has been sent to your Email.",
@@ -104,7 +107,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
                         icon: "success"
                     });
                     setTimeout(() => {
-                        setStage(stage + 1);
+                        navigate("/signin");
                     }, 1000);
                 }
             })
@@ -154,4 +157,4 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
     );
 };
 
-export default SecondForm;
+export default SecondRegForm;
