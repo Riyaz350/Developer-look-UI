@@ -1,7 +1,5 @@
 import { useState } from "react";
-import SecondForm from "../SignIn/SecondForm";
 import FirstForm from "~/components/Registration/FirstForm";
-import TwoFA from "../Shared/TwoFA";
 import SecondRegForm from "./SecondRegForm";
 export default function RegistrationForm() {
     const [formData, setFormData] = useState({ email: "", password: "" });

@@ -1,8 +1,9 @@
+import ToDoLanding from "~/components/ToDo/ToDoLanding";
 
 const ToDo = () => {
     return (
         <div>
-            <h1>tototo</h1>
+            <ToDoLanding/>
         </div>
     );
 };

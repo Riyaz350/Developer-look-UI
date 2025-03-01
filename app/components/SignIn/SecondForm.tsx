@@ -105,7 +105,15 @@ const SecondForm: React.FC<SecondFormProps> = ({ sixDgt, setSixDgt, stage, setSt
                         title: "OTP Verified",
                         icon: "success"
                     });
+                    axiosPublic.get(`/user/${formData.email}`)
+                        .then((res) => {
+                            console.log(res);
+                            localStorage.setItem("userToken", res.data.token); // Save token in localStorage
+                        })
+                        .catch((err) => console.log(err));
+
                     setTimeout(() => {
+
                         navigate("/todo");
 
                     }, 1000);

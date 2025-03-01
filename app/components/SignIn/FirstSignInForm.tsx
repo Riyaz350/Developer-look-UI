@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import useAxiosPublic from '~/hooks/useAxiosPublic';
+
 type FormData = {
   email: string;
   password: string;
@@ -13,11 +15,13 @@ type SetStageData = React.Dispatch<React.SetStateAction<number>>;
 interface FirstFormProps {
   formData: FormData;
   setFormData: SetFormData;
-  setStage: SetStageData
+  setStage: SetStageData;
 }
 
 const FirstSignInForm: React.FC<FirstFormProps> = ({ formData, setFormData, setStage }) => {
-  const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -26,28 +30,31 @@ const FirstSignInForm: React.FC<FirstFormProps> = ({ formData, setFormData, setS
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const mailData = {
-      "email": formData.email,
-      "password": formData.password,
-      "subject": "Email Verification",
-      "message": "verify your email with the code below",
-      "duration": 2
-    }
+      email: formData.email,
+      password: formData.password,
+      subject: 'Email Verification',
+      message: 'verify your email with the code below',
+      duration: 2,
+    };
 
     axiosPublic.post('/user/signin', mailData)
       .then((res) => {
         Swal.fire({
-          title: "A six digit code has been send to your Email.",
-          icon: "success"
+          title: 'A six digit code has been send to your Email.',
+          icon: 'success',
         });
         setStage((prevStage) => prevStage + 1);
       })
       .catch((error) => {
         Swal.fire({
           title: error.response.data.message,
-          icon: "error"
+          icon: 'error',
         });
-      })
+      });
+  };
 
+  const handleRedirect = () => {
+    navigate('/');
   };
 
   return (
@@ -96,6 +103,15 @@ const FirstSignInForm: React.FC<FirstFormProps> = ({ formData, setFormData, setS
           Sign In
         </motion.button>
       </motion.form>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleRedirect}
+        className="w-full mt-4 bg-gray-500 text-white py-2 rounded-lg font-semibold hover:bg-gray-600 transition"
+      >
+        I'm not registered
+      </motion.button>
     </div>
   );
 };
