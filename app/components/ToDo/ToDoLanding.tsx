@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 import useAxiosPublic from "~/hooks/useAxiosPublic";
 import CreateToDo from "./CreateToDo";
 import ShowAllToDo from "./ShowAllToDo";
@@ -49,6 +50,17 @@ const ToDoLanding: React.FC = () => {
         }
     }, [userEmail, axiosPublic]);
 
+    const handleLogout = () => {
+        localStorage.removeItem("userToken");
+        window.location.reload();
+        Swal.fire({
+            title: 'Logged Out',
+            text: 'You have been logged out successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    };
+
     return (
         <div className='w-full min-h-screen bg-white text-black flex flex-col md:flex-row'>
             {userEmail ? (
@@ -57,6 +69,15 @@ const ToDoLanding: React.FC = () => {
                         <CreateToDo email={userEmail} />
                     </div>
                     <div className='w-full md:w-2/3 p-4'>
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-2xl font-semibold">Your To-Dos</h2>
+                            <button
+                                onClick={handleLogout}
+                                className="px-3 py-1 bg-red-500 text-white text-sm rounded-lg font-semibold hover:bg-red-600 transition"
+                            >
+                                Logout
+                            </button>
+                        </div>
                         <ShowAllToDo todos={todos} />
                     </div>
                 </>
@@ -64,7 +85,6 @@ const ToDoLanding: React.FC = () => {
                 <div className='w-full flex justify-center items-center'>Loading...</div>
             )}
         </div>
-
     );
 };
 
