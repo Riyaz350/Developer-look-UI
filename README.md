@@ -1,100 +1,104 @@
-# Welcome to React Router!
+# Developer Look
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A full-stack web application for managing authentication, user verification, and task management.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## 🔗 Live Links
+- **Frontend UI**: [Developer Look UI](https://developer-look.vercel.app/)
+- **API Base URL**: [Developer Look API](https://developer-look-api.vercel.app/api/v1)
 
-## Features
+## 📂 Repositories
+- **Frontend (React/Next.js)**: [GitHub Repo](https://github.com/Riyaz350/Developer-look-UI)
+- **Backend (Node.js/Express)**: [GitHub Repo](https://github.com/Riyaz350/DeveloperLookAPI)
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 🚀 Features
+### Authentication System
+- Users receive a **6-digit verification code** via email (expires in **2 minutes**).
+- Registered users **must verify their email** before logging in.
+- Users log in using their **password** and the **6-digit verification code**.
+- A **JWT token** is saved in **local storage** for future authentication.
 
-## Getting Started
+### Task Management
+- Users can **create, update, and delete** their To-Do tasks.
+- Each user has their **own task list**.
 
-### Installation
+### Security & User Management
+- **JWT-based authentication** for secure login.
+- **Logout option** to clear user session.
 
-Install the dependencies:
+## 🛠️ Tech Stack
+- **Frontend**: React, Next.js, Tailwind CSS
+- **Backend**: Node.js, Express.js, MongoDB
+- **Authentication**: JWT, Email Verification
+- **Deployment**: Vercel
 
-```bash
+## 📜 API Endpoints
+### Authentication Routes
+| Method | Endpoint         | Description  |
+|--------|-----------------|--------------|
+| POST   | `/auth/register` | Register a new user |
+| POST   | `/auth/login`    | Login user with email & password |
+| POST   | `/auth/verify`   | Verify user with 6-digit code |
+| POST   | `/auth/logout`   | Logout user |
+
+### To-Do Task Routes
+| Method | Endpoint          | Description  |
+|--------|------------------|--------------|
+| GET    | `/tasks`         | Get all tasks for the authenticated user |
+| POST   | `/tasks`         | Create a new task |
+| PUT    | `/tasks/:id`     | Update a task |
+| DELETE | `/tasks/:id`     | Delete a task |
+
+## 🔧 Setup & Installation
+### 1️⃣ Clone the Repositories
+```sh
+git clone https://github.com/Riyaz350/Developer-look-UI.git
+cd Developer-look-UI
+```
+```sh
+git clone https://github.com/Riyaz350/DeveloperLookAPI.git
+cd DeveloperLookAPI
+```
+
+### 2️⃣ Install Dependencies
+For **Frontend**:
+```sh
+cd Developer-look-UI
+npm install
+```
+For **Backend**:
+```sh
+cd DeveloperLookAPI
 npm install
 ```
 
-### Development
+### 3️⃣ Configure Environment Variables
+Create a `.env` file in the backend project and add your credentials:
+```sh
+PORT=5000
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_jwt_secret
+EMAIL_API_KEY=your_email_api_key
+```
 
-Start the development server with HMR:
-
-```bash
+### 4️⃣ Start the Development Servers
+Frontend:
+```sh
 npm run dev
 ```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
+Backend:
+```sh
+npm start
 ```
 
-## Deployment
-
-### Docker Deployment
-
-This template includes three Dockerfiles optimized for different package managers:
-
-- `Dockerfile` - for npm
-- `Dockerfile.pnpm` - for pnpm
-- `Dockerfile.bun` - for bun
-
-To build and run using Docker:
-
-```bash
-# For npm
-docker build -t my-app .
-
-# For pnpm
-docker build -f Dockerfile.pnpm -t my-app .
-
-# For bun
-docker build -f Dockerfile.bun -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## 📜 License
+This project is licensed under the **MIT License**.
 
 ---
 
-Built with ❤️ using React Router.
+### 🎯 Future Enhancements
+- **OAuth Integration (Google Login, etc.)**
+- **Role-Based Access Control (RBAC)**
+- **Task Categories & Reminders**
+
+🚀 Happy Coding! Let me know if you need any modifications! 😊
+
